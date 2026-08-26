@@ -1,0 +1,12 @@
+{
+  "purpose": "Vetor reproduzivel para validar a assinatura do webhook sem usar segredo real.",
+  "synthetic_data": true,
+  "algorithm": "HMAC-SHA256",
+  "synthetic_secret": "scaleads-hmac-docs-synthetic-key-0001",
+  "timestamp": 1787000000,
+  "body_utf8": "{\"event\":\"lead.created\",\"version\":1,\"event_id\":\"lead-created-900001\",\"occurred_at\":\"2026-08-17T18:30:00-03:00\",\"lead\":{\"id\":900001,\"name\":\"Contato de Teste\",\"phone\":null,\"source\":\"formulario_teste\",\"utm_source\":\"documentacao\",\"utm_medium\":null,\"utm_campaign\":null,\"utm_content\":null,\"utm_term\":null,\"gclid\":null,\"fbclid\":null}}",
+  "body_sha256": "f986339e21b0055ef7540c59fd06592b2f0a46b9180eb3d99eb5535beb78c4c9",
+  "signing_rule": "HMAC-SHA256(synthetic_secret, timestamp + '.' + body_utf8)",
+  "expected_signature_hex": "48c143d1c85c6b7375a25dfcb936eaa4ae95a91e1f8f24c3a270192219d24c19",
+  "expected_header": "t=1787000000, v1=48c143d1c85c6b7375a25dfcb936eaa4ae95a91e1f8f24c3a270192219d24c19"
+}
