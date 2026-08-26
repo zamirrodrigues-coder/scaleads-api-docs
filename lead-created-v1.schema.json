@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ScaleAds lead.created v1",
+  "description": "Corpo normativo do destino generico do webhook de leads.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event",
+    "version",
+    "event_id",
+    "occurred_at",
+    "lead"
+  ],
+  "properties": {
+    "event": {
+      "type": "string",
+      "const": "lead.created"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^lead-created-[1-9][0-9]*$"
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lead": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "phone",
+        "source",
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_content",
+        "utm_term",
+        "gclid",
+        "fbclid"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "type": ["string", "null"]
+        },
+        "phone": {
+          "type": ["string", "null"]
+        },
+        "source": {
+          "type": ["string", "null"]
+        },
+        "utm_source": {
+          "type": ["string", "null"]
+        },
+        "utm_medium": {
+          "type": ["string", "null"]
+        },
+        "utm_campaign": {
+          "type": ["string", "null"]
+        },
+        "utm_content": {
+          "type": ["string", "null"]
+        },
+        "utm_term": {
+          "type": ["string", "null"]
+        },
+        "gclid": {
+          "type": ["string", "null"]
+        },
+        "fbclid": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

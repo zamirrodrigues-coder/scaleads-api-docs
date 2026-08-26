@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Payload ScaleAds para destino WebGR",
+  "description": "Corpo de uma entrega WebGR. Campos opcionais sao omitidos quando nao ha valor valido.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["leads"],
+  "properties": {
+    "leads": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["origin_code", "observation"],
+        "properties": {
+          "cnpj": {
+            "type": "string",
+            "pattern": "^[0-9]{14}$"
+          },
+          "company_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "company_nick": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "contact": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 255
+          },
+          "mobile_phone": {
+            "type": "string",
+            "pattern": "^[1-9][1-9]9[0-9]{8}$"
+          },
+          "personal_phone": {
+            "type": "string",
+            "pattern": "^[1-9][1-9][0-9]{8}$"
+          },
+          "origin_code": {
+            "const": "SCALEADS"
+          },
+          "observation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "pattern": "(?:^| \\| )lead_id=[1-9][0-9]* \\| event_id=lead-created-[1-9][0-9]*$"
+          }
+        }
+      }
+    }
+  }
+}
