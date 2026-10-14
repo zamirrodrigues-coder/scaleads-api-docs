@@ -4,7 +4,9 @@
   "description": "Corpo de uma entrega WebGR. Campos opcionais sao omitidos quando nao ha valor valido.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["leads"],
+  "required": [
+    "leads"
+  ],
   "properties": {
     "leads": {
       "type": "array",
@@ -13,11 +15,14 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["origin_code", "observation"],
+        "required": [
+          "observation"
+        ],
         "properties": {
           "cnpj": {
             "type": "string",
-            "pattern": "^[0-9]{14}$"
+            "pattern": "^[0-9]{14}$",
+            "description": "CNPJ real do lead, quando existir. Sem ele, o ScaleAds pode enviar um documento provisório determinístico, derivado do cliente e do lead, com dígitos verificadores válidos. O provisório não é dado fiscal e não é gravado no cadastro do lead; o campo `observation` avisa com `documento_provisorio=atualizar`."
           },
           "company_name": {
             "type": "string",
@@ -48,13 +53,18 @@
             "pattern": "^[1-9][1-9][0-9]{8}$"
           },
           "origin_code": {
-            "const": "SCALEADS"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "pattern": "^[A-Za-z0-9_-]{1,40}$",
+            "description": "Código de origem acordado com o receptor e configurado por cliente no ScaleAds. Aceita letras, números, `_` e `-`, com até 40 caracteres. Sem valor configurado, o campo é omitido do corpo e nunca vai vazio. O código precisa existir no WebGR: valor desconhecido é recusado com HTTP 400, sem mensagem, e a entrega é encerrada em definitivo."
           },
           "observation": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 500,
-            "pattern": "(?:^| \\| )lead_id=[1-9][0-9]* \\| event_id=lead-created-[1-9][0-9]*$"
+            "maxLength": 250,
+            "pattern": "(?:^| \\| )lead_id=[1-9][0-9]* \\| event_id=lead-created-[1-9][0-9]*$",
+            "description": "Pares `chave=valor` separados por ` | `, com até 250 bytes em UTF-8, limite medido no WebGR. Os dados de marketing (origem, UTMs, `gclid` e `fbclid`) vêm primeiro e são cortados a partir do fim quando o limite é atingido. O final nunca é cortado: `origem_sistema=ScaleAds`, `documento_provisorio=atualizar` quando o CNPJ é provisório, `lead_id` e `event_id`."
           }
         }
       }
